@@ -1,0 +1,10 @@
+build/
+build/bin/
+build/int/
+
+*.exe
+*.lib
+*.dll
+*.o
+*.obj
+*.log
