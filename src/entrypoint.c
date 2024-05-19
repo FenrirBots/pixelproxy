@@ -52,10 +52,7 @@ int main(
 	{
 		http_client_connect(&client_instance);
 		http_set_option(&client_instance, HTTP_OPT_NOBLOCK, 1);
-		if (http_server_connect(&server_instance))
-		{
-			printf("Error %i\n", WSAGetLastError());
-		}
+		http_server_connect(&server_instance);
 		http_set_option(&server_instance, HTTP_OPT_NOBLOCK, 1);
 
 		while (1)
