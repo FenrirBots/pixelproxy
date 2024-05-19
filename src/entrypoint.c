@@ -1,13 +1,6 @@
 #include <inc/http.h>
 #include <stdio.h>
 
-/* TODO:
-	 - Add error checking
-	 - Add a recv/send loop
-	 - Add a http_instance_cleanup function
-	 - Look into free causing an access violation after calling recv/send
-*/
-
 /* The domain which we redirect to our proxy */
 #define PIXEL_WORLDS_DOMAIN "prod.gamev90.portalworldsgame.com"
 
@@ -17,7 +10,6 @@
 
 void print_banner(
 	)
-
 {
 	#define VERSION_MAJOR 1
 	#define VERSION_MINOR 0
@@ -29,8 +21,7 @@ void print_banner(
 
 int main(
 	int argc,
-	char** argv )
-
+	char** argv)
 {
 	struct http_instance client_instance;
 	struct http_instance server_instance;
