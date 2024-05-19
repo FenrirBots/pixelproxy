@@ -1,6 +1,13 @@
 #include <inc/http.h>
 #include <stdio.h>
 
+/* TODO:
+	 - Add error checking
+	 - Add a recv/send loop
+	 - Add a http_instance_cleanup function
+	 - Look into free causing an access violation after calling recv/send
+*/
+
 /* The domain which we redirect to our proxy */
 #define PIXEL_WORLDS_DOMAIN "prod.gamev90.portalworldsgame.com"
 
@@ -40,7 +47,7 @@ int main(
 	http_set_option(&client_instance, HTTP_OPT_IPV4, 0);
 	http_client_create(&client_instance);
 	http_set_address(&client_instance, PIXEL_WORLDS_IP, PIXEL_WORLDS_PORT);
-
+	
 	http_set_option(&server_instance, HTTP_OPT_TCP, 0);
 	http_set_option(&server_instance, HTTP_OPT_IPV4, 0);
 	http_server_create(&server_instance);
@@ -57,7 +64,6 @@ int main(
 
 		while (1)
 		{
-
 		}
 
 		http_disconnect(&client_instance);
