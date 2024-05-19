@@ -61,5 +61,7 @@ int main(
 		http_disconnect(&server_instance);
 	}
 
+	http_instance_cleanup(&client_instance);
+	http_instance_cleanup(&server_instance);
 	http_cleanup();
 }

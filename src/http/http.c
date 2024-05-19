@@ -118,3 +118,9 @@ uint32_t http_instance_init(
 
 	return HTTP_OK;
 }
+
+uint32_t http_instance_cleanup(
+	struct http_instance *instance)
+{
+	return HTTP_OK;
+}
