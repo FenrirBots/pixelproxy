@@ -19,6 +19,7 @@ set ccflags=%ccflags% -O2
 set cclibs=-lws2_32
 
 %cc% %ccdirs% %ccflags% -c -o %workspaceDir%\build\int\entrypoint.o %workspaceDir%\src\entrypoint.c
-%cc% %ccdirs% -o %workspaceDir%\build\bin\pixelproxy.exe %workspaceDir%\build\int\entrypoint.o %cclibs%
+%cc% %ccdirs% %ccflags% -c -o %workspaceDir%\build\int\http.o %workspaceDir%\src\http.c
+%cc% %ccdirs% -o %workspaceDir%\build\bin\pixelproxy.exe %workspaceDir%\build\int\*.o %cclibs%
 
 endlocal
