@@ -1,4 +1,6 @@
 #include <inc/http.h>
+#include <malloc.h>
+#include <stdint.h>
 #include <stdio.h>
 
 /* The domain which we redirect to our proxy */
@@ -20,8 +22,8 @@ void print_banner(
 }
 
 int main(
-	int argc,
-	char** argv)
+	uint32_t argc,
+	uint8_t *argv[])
 {
 	struct http_instance client_instance;
 	struct http_instance server_instance;
@@ -29,29 +31,29 @@ int main(
 	print_banner();
 	http_startup();
 
-	memset(&client_instance, 0, sizeof(client_instance));
-	http_instance_init(&client_instance);
-	memset(&server_instance, 0, sizeof(server_instance));
-	http_instance_init(&server_instance);
-	
-	http_set_option(&client_instance, HTTP_OPT_TCP, 0);
-	http_set_option(&client_instance, HTTP_OPT_IPV4, 0);
 	http_client_create(&client_instance);
 	http_set_address(&client_instance, PIXEL_WORLDS_IP, PIXEL_WORLDS_PORT);
-	
-	http_set_option(&server_instance, HTTP_OPT_TCP, 0);
-	http_set_option(&server_instance, HTTP_OPT_IPV4, 0);
+
 	http_server_create(&server_instance);
-	http_set_option(&server_instance, HTTP_OPT_QUEUE, 1);
 	http_set_address(&server_instance, "127.0.0.1", PIXEL_WORLDS_PORT);
+	http_set_opt(&server_instance, HTTP_OPT_QUEUE, 1);
 	http_server_listen(&server_instance);
 
 	while (1)
 	{
-		http_client_connect(&client_instance);
-		http_set_option(&client_instance, HTTP_OPT_NOBLOCK, 1);
-		http_server_connect(&server_instance);
-		http_set_option(&server_instance, HTTP_OPT_NOBLOCK, 1);
+		if (http_client_connect(&client_instance))
+		{
+			printf("Failed to connect to the server\n");
+			return 0;
+		}
+		http_set_opt(&client_instance, HTTP_OPT_NOBLOCK, 1);
+
+		if (http_server_connect(&server_instance))
+		{
+			printf("Failed to connect to the server\n");
+			return 0;
+		}
+		http_set_opt(&server_instance, HTTP_OPT_NOBLOCK, 1);
 
 		while (1)
 		{
@@ -59,9 +61,10 @@ int main(
 
 		http_disconnect(&client_instance);
 		http_disconnect(&server_instance);
+
+		printf("Disconnected, Attempting to reconnect in 5 seconds...");
+		Sleep(5000);
 	}
 
-	http_instance_cleanup(&client_instance);
-	http_instance_cleanup(&server_instance);
 	http_cleanup();
 }

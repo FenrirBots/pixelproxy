@@ -8,8 +8,8 @@ uint32_t http_server_create(
 		return HTTP_E_INVALID_INSTANCE;
 	}
 
-	instance->listener = socket(instance->family, instance->type, instance->protocol);
-	instance->connection = INVALID_SOCKET;
+	instance->listener = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	instance->connection   = INVALID_SOCKET;
 
 	if (instance->listener == INVALID_SOCKET)
 	{
