@@ -14,6 +14,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pretium cursus a
 - [ ] Add a basic recv/send loop
 - [ ] Add a basic BSON handler
 - [ ] Properly handle the IP redirect packet
+- [ ] Make HTTP code IPv6 agnostic
 
 ## License
 This project is distributed under the GNU General Public License v3.0. See LICENSE.md for more information.
